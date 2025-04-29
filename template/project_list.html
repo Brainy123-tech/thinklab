@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animations & Simulations</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50; /* Dark background for a modern look */
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #1abc9c; /* Futuristic green color */
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); /* Glow effect */
+            animation: fadeInTitle 2s ease-out;
+        }
+
+        @keyframes fadeInTitle {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            animation: fadeInGrid 2s ease-out;
+        }
+
+        @keyframes fadeInGrid {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            background: #34495e; /* Dark blue-gray card */
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-image: url('https://www.transparenttextures.com/patterns/diag-stripes-light.png');
+            background-size: 150%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* Lift effect on hover */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #1abc9c; /* Green text */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #ecf0f1; /* Light gray text */
+            margin-bottom: 20px;
+        }
+
+        .button-blue {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #1abc9c; /* Futuristic green */
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-blue:hover {
+            background-color: #16a085; /* Darker green on hover */
+            transform: scale(1.05);
+        }
+
+        /* Animated background effect */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.5));
+            animation: moveBackground 8s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <div class="title">Animations & Simulations</div>
+        <div class="grid">
+            <div class="card">
+                <h2>Introduction to Animal Ecology</h2>
+                <p>Explore energy flow, food webs, and species interaction simulations.</p>
+                <a href="{% url 'animal_ecology' %}" class="button-blue">Start Simulation</a>
+            </div>
+            <div class="card">
+                <h2>Principles of Genetics</h2>
+                <p>Dive into Mendelian laws, inheritance patterns, and Punnett squares.</p>
+                <a href="#" class="button-blue">Coming Soon</a>
+            </div>
+            <div class="card">
+                <h2>Enzymology</h2>
+                <p>Simulate enzyme-substrate interactions and the effect of variables on reaction rate.</p>
+                <a href="#" class="button-blue">Coming Soon</a>
+            </div>
+            <div class="card">
+                <h2>Physics Simulations</h2>
+                <p>Explore interactive simulations of physical principles like motion, forces, and energy.</p>
+                <a href="#" class="button-blue">Coming Soon</a>
+            </div>
+            <div class="card">
+                <h2>Chemistry Lab</h2>
+                <p>Conduct virtual experiments to learn about chemical reactions and periodic trends.</p>
+                <a href="#" class="button-blue">Coming Soon</a>
+            </div>
+            <div class="card">
+                <h2>Mathematics Visualizations</h2>
+                <p>Engage with interactive models of mathematical concepts like functions and geometry.</p>
+                <a href="#" class="button-blue">Coming Soon</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

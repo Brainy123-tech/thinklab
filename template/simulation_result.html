@@ -1,0 +1,131 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Results</title>
+    <style>
+        .simulation-section {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .simulation-section {
+            background-color: #ffffff;
+            padding: 30px;
+            text-align: center;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .simulation-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .simulation-results {
+            font-size: 1.25rem;
+            color: #444;
+            margin: 15px 0;
+        }
+        
+        .simulation-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 25px;
+            margin-top: 20px;
+        }
+
+        .progress-bar-inner {
+            height: 25px;
+            background-color: #4caf50;
+            border-radius: 25px;
+            width: 0%;
+            text-align: center;
+            color: white;
+            line-height: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="simulation-section">
+        <h1>Simulation Results</h1>
+
+        <p><strong>Animal Type:</strong> {{ animal_type }}</p>
+        <p><strong>Final Population:</strong> {{ final_population }}</p>
+        <p><strong>Predation Rate:</strong> {{ predation }}%</p>
+        <p><strong>Food Availability:</strong> {{ food }}%</p>
+        <p><strong>Reproduction Rate:</strong> {{ reproduction }}%</p>
+
+        <div class="progress-bar">
+            <div id="progress" class="progress-bar-inner">0%</div>
+        </div>
+
+        <button class="btn" onclick="restartSimulation()">Restart Simulation</button>
+    </div>
+
+    <script>
+        const successRate = {{ final_population }};
+        let width = 0;
+
+        function updateProgressBar() {
+            const progress = document.getElementById("progress");
+            const interval = setInterval(function () {
+                if (width >= successRate) {
+                    clearInterval(interval);
+                    progress.innerHTML = successRate + "%";
+                    alert("Simulation Complete!");
+                } else {
+                    width++;
+                    progress.style.width = width + '%';
+                    progress.innerHTML = width + '%';
+                }
+            }, 50); // Smooth speed
+        }
+
+        function restartSimulation() {
+            if (confirm("Are you sure you want to restart the simulation?")) {
+                window.location.href = "{% url 'simulation' %}";  // Or use .reload() to stay on the same page
+            }
+        }
+
+        window.onload = updateProgressBar;
+    </script>
+
+</body>
+</html>

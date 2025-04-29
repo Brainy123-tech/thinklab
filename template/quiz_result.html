@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">{{ quiz.title }} - Your Quiz Results</h2>
+    
+    <!-- Displaying the score -->
+    <div class="alert alert-info">
+      <p><strong>Your Score:</strong> {{ score }} / {{ total_questions }}</p>
+      <p>
+        {% if passed %}
+          <span style="color: green;">Great job! 🎉</span>
+        {% else %}
+          <span style="color: red;">Don't worry! Keep practicing! 💪</span>
+        {% endif %}
+      </p>
+    </div>
+
+    <!-- Displaying each question and the user's answer -->
+    {% for ua in user_answers %}
+      <div class="card mb-3">
+        <div class="card-header">
+          <strong>Question {{ forloop.counter }}:</strong> {{ ua.question.text }}
+        </div>
+        <div class="card-body">
+          {% if ua.selected_answer %}
+            <p><strong>Your Answer:</strong> {{ ua.selected_answer.text }}</p>
+          {% else %}
+            <p style="color: orange;"><strong>You didn’t answer this question</strong></p>
+          {% endif %}
+          {% if ua.is_correct %}
+            <p style="color: green;"><strong>Correct ✅</strong></p>
+          {% else %}
+            <p style="color: red;"><strong>Wrong ❌</strong></p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- Optional: Button to retake the quiz or go back -->
+    <a href="{% url 'take_quiz' quiz.id %}" class="btn btn-primary">Retake Quiz</a>
+    <a href="{% url 'quiz_page' %}" class="btn btn-secondary">Back to Quizzes</a>
+
+    <!-- Buy Me a Coffee Section (Mobile Money) -->
+    <div class="mt-5 p-4 rounded-lg" style="background-color: #2c3e50; color: white;">
+      <h3 class="text-center mb-3" style="font-size: 1.8rem; font-weight: bold;">If you found this quiz helpful, you can buy me a coffee! ☕</h3>
+      <p class="text-center">To show your support, please send money to the following mobile money number:</p>
+      
+      <div class="alert alert-light text-center" style="background-color: #34495e; color: #ecf0f1; font-size: 1.2rem; padding: 20px; border-radius: 8px;">
+        <p><strong>Mobile Money Number:</strong> <span style="font-weight: bold; color: #ff6347;">+233 503752543</span></p>
+        <p>Simply send any amount to this number and support the content!</p>
+      </div>
+
+      <div class="text-center">
+        <a href="tel:+233503751543" class="btn btn-warning btn-lg" style="border-radius: 30px; padding: 10px 30px; font-size: 1.1rem;">Send Mobile Money</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

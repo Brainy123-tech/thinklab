@@ -1,0 +1,14 @@
+<!-- payment_page.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Payment Page</h2>
+    <p>Complete your payment to access quizzes.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <!-- Here, you would add actual payment logic with a service like Stripe -->
+        <button type="submit" class="btn btn-primary">Complete Payment</button>
+    </form>
+</div>
+{% endblock %}

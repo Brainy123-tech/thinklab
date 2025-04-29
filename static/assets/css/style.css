@@ -1,0 +1,222 @@
+/* style.css */
+a {
+    text-decoration: none;
+  }
+  
+  .button-blue {
+    background-color: #1877f2; /* Facebook blue */
+    color: white;
+    font-size: 1.25rem;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+    transition: 0.3s ease;
+  }
+  
+  .button-blue:hover {
+    background-color: #145dbf;
+  }
+  
+  .sitename {
+    font-size: 3rem; /* Large font size for visibility */
+    font-weight: bold; /* Make it bold */
+    text-align: center; /* Center-align the text */
+    color: transparent; /* Make the text color transparent to show the gradient */
+    text-transform: uppercase; /* Make text uppercase */
+    letter-spacing: 3px; /* Add spacing between letters */
+    margin-top: 20px; /* Add some space at the top */
+    font-family: 'Roboto', sans-serif; /* Use a clean, modern font */
+    padding: 10px 0; /* Add some padding around the text */
+    background: linear-gradient(45deg, #6ee7b7, #3b82f6); /* Gradient background */
+    -webkit-background-clip: text; /* Clip the gradient to the text */
+    background-clip: text; /* Use standard background-clip for other browsers */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .sitename:hover {
+    transform: scale(1.1); /* Make the text slightly larger on hover */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow on hover */
+  }
+  
+  .blog-post {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.video-container {
+    margin: 1rem 0;
+}
+
+a {
+    text-decoration: none;
+    color: #3b82f6;
+}
+
+a:hover {
+    color: #6ee7b7;
+}
+
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1.page-title {
+  font-size: 2.5rem;
+  color: #005aab;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Navigation Back Button */
+.navbar {
+  margin: 20px 0;
+}
+
+.back-btn {
+  font-size: 1.2rem;
+  color: #005aab;
+  text-decoration: none;
+  border: 2px solid #005aab;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #005aab;
+  color: white;
+}
+
+/* Blog List */
+.blog-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.blog-post {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.blog-post .post-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.blog-post .post-date {
+  font-size: 1rem;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.blog-post .post-summary {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.blog-post .read-more {
+  font-size: 1.1rem;
+  color: #005aab;
+  text-decoration: none;
+}
+
+.blog-post .read-more:hover {
+  text-decoration: underline;
+}
+
+/* No Posts Available */
+.no-posts {
+  font-size: 1.3rem;
+  text-align: center;
+  color: #888;
+}
+
+/* Resetting margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Navigation Back Button */
+.navbar {
+  background-color: #2C3E50;
+  padding: 15px;
+  text-align: center;
+}
+
+.navbar .back-btn {
+  color: #ECF0F1;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Page Title */
+.container {
+  padding: 30px;
+}
+
+.page-title {
+  font-size: 36px;
+  color: #34495E;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Blog Posts List */
+.blog-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.blog-post {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post h2 {
+  font-size: 24px;
+  color: #2C3E50;
+}
+

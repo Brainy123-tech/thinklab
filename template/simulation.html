@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Ecology Simulation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    <style>
+        /* Your CSS styles (no changes needed for now) */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
+        .simulation-section { padding: 40px; max-width: 800px; margin: auto; text-align: center; }
+        .simulation-container { background: white; padding: 20px; border-radius: 12px; margin-top: 30px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        input, select, button { padding: 10px; font-size: 1rem; margin: 10px; border-radius: 6px; border: 1px solid #ccc; }
+        .progress-bar { background-color: #eee; border-radius: 25px; margin: 20px auto; height: 25px; width: 100%; max-width: 500px; position: relative; }
+        .progress-bar-inner { height: 100%; width: 0%; background-color: #28a745; border-radius: 25px; color: white; text-align: center; line-height: 25px; transition: width 0.3s ease-in-out; }
+        footer { text-align: center; padding: 20px; font-size: 0.9rem; color: #777; }
+    </style>
+
+    <script>
+        document.addEventListener('input', () => {
+            document.getElementById("predation-value").innerText = document.getElementById("predation").value + "%";
+            document.getElementById("food-value").innerText = document.getElementById("food").value + "%";
+            document.getElementById("reproduction-value").innerText = document.getElementById("reproduction").value + "%";
+        });
+
+        function startSimulation() {
+            const animal = document.getElementById("animal").value;
+            let population = parseInt(document.getElementById("population").value);
+            const predation = parseInt(document.getElementById("predation").value);
+            const food = parseInt(document.getElementById("food").value);
+            const reproduction = parseInt(document.getElementById("reproduction").value);
+
+            const progress = document.getElementById("progress-inner");
+            const results = document.getElementById("results");
+
+            if (!animal || isNaN(population) || population <= 0) {
+                alert("Please select an animal and provide a valid population.");
+                return;
+            }
+
+            progress.style.width = "0%";
+            progress.innerHTML = "0%";
+            results.innerHTML = "";
+
+            let progressValue = 0;
+            const interval = setInterval(() => {
+                if (progressValue >= 100) {
+                    clearInterval(interval);
+                    progress.innerHTML = "Simulation Complete!";
+                    results.innerHTML = `<p><strong>Final Population of ${animal}:</strong> ${Math.round(population)}</p>`;
+                } else {
+                    const deathRate = predation / 100;
+                    const growthRate = (reproduction * food) / 10000;
+                    population = population + (population * growthRate) - (population * deathRate);
+                    population = Math.max(population, 0); // Prevent negative population
+                    progressValue += 5;
+                    progress.style.width = progressValue + "%";
+                    progress.innerHTML = progressValue + "%";
+                }
+            }, 300);
+        }
+    </script>
+</head>
+
+<body>
+
+    <section class="simulation-section">
+        <h1>Animal Ecology Simulation</h1>
+        <p>Simulate ecological scenarios by selecting animal types and population settings.</p>
+
+        <div class="simulation-container">
+            <form onsubmit="return false;">
+                {% csrf_token %}
+                
+                <label for="animal">Choose Animal:</label>
+                <select id="animal" name="animal">
+                    <option value="">-- Select Animal --</option>
+                    <option value="Elephant">Elephant</option>
+                    <option value="Lion">Lion</option>
+                    <option value="Zebra">Zebra</option>
+                    <option value="Rabbit">Rabbit</option>
+                </select><br>
+
+                <label for="population">Initial Population:</label>
+                <input type="number" id="population" name="population" min="1" placeholder="e.g. 50"><br>
+
+                <label for="predation">Predation Rate (0-100%):</label>
+                <input type="range" id="predation" name="predation" min="0" max="100" value="10">
+                <span id="predation-value">10%</span><br>
+
+                <label for="food">Food Availability (0-100%):</label>
+                <input type="range" id="food" name="food" min="0" max="100" value="70">
+                <span id="food-value">70%</span><br>
+
+                <label for="reproduction">Reproduction Rate (0-100%):</label>
+                <input type="range" id="reproduction" name="reproduction" min="0" max="100" value="30">
+                <span id="reproduction-value">30%</span><br>
+
+                <button type="button" onclick="startSimulation()">Start Simulation</button>
+            </form>
+
+            <div class="progress-bar">
+                <div id="progress-inner" class="progress-bar-inner">0%</div>
+            </div>
+
+            <div id="results"></div>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Think Lab. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

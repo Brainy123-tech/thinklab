@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think Lab Quizzes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+        }
+        .header h1 {
+            font-size: 36px;
+        }
+        .subject-section {
+            padding: 20px;
+        }
+        .subject {
+            background: #1c1c1c;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .subject h2 {
+            margin-top: 0;
+        }
+        .quiz-link {
+            display: inline-block;
+            margin: 8px 0;
+            padding: 10px 15px;
+            background: #4caf50;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        .quiz-link:hover {
+            background: #45a049;
+        }
+
+        .media-section {
+            margin-top: 20px;
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+       .media-block h4 {
+            margin: 10px 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Welcome to Think Lab Quizzes</h1>
+        <p>Select a subject to take a quiz or watch tutorial videos!</p>
+        
+    </div>
+
+    <div class="media-section">
+        <h3>Resources</h3>
+    
+        <div class="media-section">
+            <h3>Resources</h3>
+        
+            {% for quiz in quizzes %}
+            <div class="media-block">
+                <h4>{{ quiz.title }}</h4>
+                <p><strong>Description:</strong> {{ quiz.description }}</p>
+        
+                <h5>Slide Download:</h5>
+                {% if quiz.slide %}
+                    <a href="{{ quiz.slide.url }}" download class="quiz-link">Download PDF</a>
+                {% else %}
+                    <p>No slides available for this quiz.</p>
+                {% endif %}
+        
+                <h5>Watch Video:</h5>
+                {% if quiz.video %}
+                    <video controls width="100%" style="border-radius: 10px; margin-top: 10px;">
+                        <source src="{{ quiz.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% else %}
+                    <p>No video available for this quiz.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+    <div class="subject-section">
+        {% for subject in subjects %}
+        <div class="subject">
+            <h2>{{ subject.name }}</h2>
+            {% if subject.quiz_set.all %}
+                {% for quiz in subject.quiz_set.all %}
+                    <a class="quiz-link" href="{% url 'take_quiz' quiz.id %}">{{ quiz.title }}</a><br>
+                {% endfor %}
+            {% else %}
+                <p>No quizzes yet for this subject.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

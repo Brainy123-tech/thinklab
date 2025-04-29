@@ -1,0 +1,237 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Body Background */
+        body {
+            background-color: transparent;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            margin-top: 70px; /* Adjust based on navbar height */
+        }
+
+        /* Site Name with Gradient */
+        .sitename {
+            text-align: center;
+            font-size: 4rem;
+            color: lch(58.15% 55.49 153.96);
+            background: linear-gradient(45deg, #ff6347, #ffb6c1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-top: 50px;
+            animation: gradient-animation 3s infinite linear;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Back Button */
+        .back-btn {
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #ff6347;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #ffb6c1;
+            transform: scale(1.1);
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        /* Blog Post Container */
+        .blog-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .blog-post {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            height: auto;
+        }
+
+        .post-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .post-date {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .post-summary {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Read More Button */
+        .button-blue {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: white;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .button-blue:hover {
+            background-color: #ffb6c1;
+            transform: scale(1.1);
+        }
+
+        /* Optional Video Styling */
+        .video-container {
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* No posts message */
+        .no-posts {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 50px;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .blog-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Site Name with Gradient -->
+    <h1 class="sitename">Think Lab</h1>
+
+    <!-- Navigation Back Button -->
+    <div class="navbar">
+        <a href="{% url 'index' %}" class="back-btn">← Back to Home</a>
+    </div>
+
+    <!-- Page Title -->
+    <div class="container">
+        <h1 class="page-title">Blog Posts</h1>
+
+        <!-- Blog Posts List -->
+        {% if posts %}
+            <div class="blog-list">
+                {% for post in posts %}
+                    <div class="blog-post">
+                        <!-- Image -->
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                        {% endif %}
+
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <p class="post-date">Posted on: {{ post.created_at|date:"F j, Y" }}</p>
+                        <div class="post-summary">
+                            <span class="short-summary">{{ post.content|truncatewords:30 }}</span>
+                            <span class="full-summary d-none">{{ post.content }}</span>
+                          </div>
+                        <!-- Optional Video -->
+                        {% if post.video_url %}
+                            <div class="video-container">
+                                <iframe width="100%" height="315" src="{{ post.video_url }}" 
+                                    title="Blog Video" frameborder="0"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        {% endif %}
+
+                        <!-- Read More Button -->
+                        <a href="#" class="button-blue read-more-toggle">Read More</a>
+                        {% if post.external_link %}
+                            <a href="{{ post.external_link }}" class="button-blue" target="_blank" style="margin-left: 10px;">
+                                Visit Source
+                            </a>
+                        {% endif %}
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-posts">No blog posts available yet. Check back later!</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('.read-more-toggle').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              const summary = this.previousElementSibling;
+              const short = summary.querySelector('.short-summary');
+              const full = summary.querySelector('.full-summary');
+      
+              short.classList.toggle('d-none');
+              full.classList.toggle('d-none');
+      
+              this.textContent = full.classList.contains('d-none') ? 'Read More' : 'Read Less';
+            });
+          });
+        });
+      </script>
+      
+
+</body>
+</html>
