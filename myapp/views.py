@@ -73,8 +73,8 @@ def dashboard(request):
     profile, created = UserProfile.objects.get_or_create(user=request.user)
 
     # Redirect if user hasn't paid
-    if not profile.has_paid:
-        return redirect('payment_page')
+    #if not profile.has_paid:
+        #return redirect('payment_page')
 
     if request.method == 'POST':
         if 'profile_picture' in request.FILES:
@@ -114,14 +114,22 @@ def logout_view(request):
     return redirect('index')
 
 # Payment page
-@login_required
 def payment_page(request):
     if request.method == 'POST':
         # Simulate payment process
         profile = request.user.userprofile
         profile.has_paid = True
         profile.save()
-        return redirect('dashboard')
+
+        # Retrieve the quiz ID from session (if any)
+        quiz_id = request.session.get('quiz_to_take')
+        if quiz_id:
+            # Remove it from session after using
+            del request.session['quiz_to_take']
+            return redirect('take_quiz', quiz_id=quiz_id)
+        
+        # Default redirect if no quiz_id was stored
+        return redirect('take_quiz')  # or any fallback view
     
     return render(request, 'payment_page.html')
 
