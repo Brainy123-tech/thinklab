@@ -107,13 +107,16 @@
             {% if subject.quiz_set.all %}
                 {% for quiz in subject.quiz_set.all %}
                     <a class="quiz-link" href="{% url 'take_quiz' quiz.id %}">{{ quiz.title }}</a><br>
+
+
                 {% endfor %}
             {% else %}
                 <p>No quizzes yet for this subject.</p>
             {% endif %}
         </div>
+       
+    </div>
         {% endfor %}
     </div>
-
 </body>
 </html>
